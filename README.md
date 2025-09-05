@@ -36,4 +36,6 @@ Math/AST-based safe expression parser
 
 🚀 Usage
 
-Install dependencies:
+pip install fastapi uvicorn pydantic asteval
+
+uvicorn main:app --reload
