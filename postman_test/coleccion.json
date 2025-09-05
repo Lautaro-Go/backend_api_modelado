@@ -1,0 +1,89 @@
+{
+  "info": {
+    "name": "Numerical Integration API",
+    "_postman_id": "d6d3a1a1-aaaa-bbbb-cccc-000000000001",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://127.0.0.1:8000" }
+  ],
+  "item": [
+    {
+      "name": "POST /api/integracion/resolver",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/integracion/resolver",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "integracion", "resolver"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{{requestBody}}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Tests genéricos para todas las variantes",
+              "pm.test('Status 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const json = pm.response.json();",
+              "",
+              "pm.test('Tiene campos básicos', function () {",
+              "  pm.expect(json).to.have.property('metodo');",
+              "  pm.expect(json).to.have.property('value');",
+              "  pm.expect(json).to.have.property('points');",
+              "  pm.expect(json).to.have.property('curva_f');",
+              "});",
+              "",
+              "pm.test('Tipos correctos', function () {",
+              "  pm.expect(json.metodo).to.be.a('string');",
+              "  pm.expect(json.value).to.be.a('number');",
+              "  pm.expect(json.points).to.be.an('array');",
+              "  pm.expect(json.curva_f).to.be.an('array');",
+              "});",
+              "",
+              "// Si viene step_size, debe ser número",
+              "if (json.step_size !== null && json.step_size !== undefined) {",
+              "  pm.test('step_size es número (si existe)', function () {",
+              "    pm.expect(json.step_size).to.be.a('number');",
+              "  });",
+              "}",
+              "",
+              "// Validar que el método de respuesta coincide con el método solicitado (si lo mandamos en el body)",
+              "try {",
+              "  const sent = JSON.parse(pm.iterationData.get('requestBody') || pm.variables.get('requestBody') || '{}');",
+              "  if (sent.metodo) {",
+              "    pm.test('metodo coincide', function () {",
+              "      pm.expect(json.metodo).to.eql(sent.metodo);",
+              "    });",
+              "  }",
+              "} catch(e) { /* ignore */ }",
+              "",
+              "// Sanity checks básicos sobre points",
+              "pm.test('points tienen estructura', function () {",
+              "  if (json.points.length > 0) {",
+              "    const p = json.points[0];",
+              "    pm.expect(p).to.have.property('index');",
+              "    pm.expect(p).to.have.property('x');",
+              "    pm.expect(p).to.have.property('fx');",
+              "    pm.expect(p).to.have.property('coefficient');",
+              "    pm.expect(p).to.have.property('contribution');",
+              "  }",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

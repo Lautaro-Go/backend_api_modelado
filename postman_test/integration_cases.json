@@ -1,0 +1,20 @@
+[
+  {
+    "requestBody": "{\"metodo\":\"rectangulo\",\"fx\":\"x^2\",\"a\":0,\"b\":1,\"n\":10}"
+  },
+  {
+    "requestBody": "{\"metodo\":\"trapezoidal\",\"fx\":\"sin(x)\",\"a\":0,\"b\":3.1415926535,\"n\":8}"
+  },
+  {
+    "requestBody": "{\"metodo\":\"simpson_13\",\"fx\":\"x^3\",\"a\":0,\"b\":1,\"n\":6}"
+  },
+  {
+    "requestBody": "{\"metodo\":\"simpson_38\",\"fx\":\"exp(-x^2)\",\"a\":0,\"b\":1,\"n\":9}"
+  },
+  {
+    "requestBody": "{\"metodo\":\"boole\",\"fx\":\"cos(x)\",\"a\":0,\"b\":3.1415926535,\"n\":12}"
+  },
+  {
+    "requestBody": "{\"metodo\":\"adaptativo\",\"fx\":\"sin(x)/x\",\"a\":0,\"b\":3.1415926535,\"tol\":1e-6}"
+  }
+]

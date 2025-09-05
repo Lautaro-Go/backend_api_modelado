@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from controllers.raices_controller import router
+from controllers.integracion_controller import router as integracion_router
 
 app = FastAPI()
 
@@ -15,3 +16,4 @@ app.add_middleware(
 
 # Registrar rutas con prefijo /api
 app.include_router(router, prefix="/api")
+app.include_router(integracion_router, prefix="/api")  # queda /api/integracion/resolver
